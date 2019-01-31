@@ -10,18 +10,18 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/ecommerce'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:root@localhost/tododb'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = 'apple'
 
 db = SQLAlchemy(app)
 
-    
 class Users(db.Model):
     __tablename__ ='users'
     id = db.Column(db.Integer, primary_key=True)
     email_id = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(500))
+
 
 
 def token_required(f):
@@ -56,7 +56,7 @@ def get_token(user_id,email_id,password):
         }
     token = jwt.encode(d, app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
     return token
-
+    
 @app.route('/register', methods=['POST'])
 def register():
 
@@ -88,8 +88,6 @@ def login():
             return jsonify({'token': token, 'message':'Successfully logged in'})
     
     return jsonify({'message': 'Invalid User...Please register using /register'})
-           
-
 
 
 if __name__ == '__main__':
