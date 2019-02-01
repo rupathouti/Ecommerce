@@ -4,6 +4,8 @@ CREATE DATABASE ecommerce;
 
 USE `ecommerce`;
 
+select * from users
+
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
@@ -82,8 +84,13 @@ INSERT INTO products (product_name,cost)
 
 INSERT INTO products (product_name,cost) 
   VALUES ("Zebronics BT6590RUCF 5.1 Channel Multimedia Speakers",37000);
+  
+INSERT INTO products (product_name, cost) values ("dellllll ", 45);
 
+INSERT INTO products (product_name,cost) 
+  VALUES ("Samsung Washing Machine ",7855);
 
+select * from products;
 DROP TABLE IF EXISTS order_details;
 
 CREATE TABLE order_details (
@@ -96,4 +103,9 @@ FOREIGN KEY (order_id) REFERENCES orders (id),
 FOREIGN KEY (product_id) REFERENCES products (id));
 
 
+select * from products
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `test`(IN cnt int)
+BEGIN
+select * from products;
+END

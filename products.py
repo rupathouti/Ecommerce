@@ -49,9 +49,11 @@ def add_products(user):
     product = Products.query.filter_by(product_name=data['product_name'])
 
     if product.count() == 0:
-        new_product = Products(product_name=data['product_name'],cost=data['cost'])
-
-        db.session.add(new_product)
+        # new_product = Products(product_name=data['product_name'],cost=data['cost'])
+        from sqlalchemy import text
+        db.session.execute(text("call usp_insertproducts(:pname,:pcost)"),{"pname":data['product_name'],"pcost":data['cost']})
+        
+        # db.session.add(new_product)
         db.session.commit()
 
         return jsonify({'message': 'The New Product has been added'})
@@ -73,10 +75,12 @@ def update_product(user,id):
         #update products set product_name =data['product_name'], cost = data['cost']
         #where id = **product.id**(product = Products.query.filter_by(id=id).first())
         data = request.get_json()
-        product.product_name = data['product_name']
-        product.cost = data['cost']
-        db.session.add(product)
-        db.session.commit()
+        # product.product_name = data['product_name']
+        # product.cost = data['cost']
+        # db.session.add(product)
+        # db.session.commit()
+        from sqlalchemy import text
+        db.session.execute(text("call usp_insertproducts(:pname,:pcost)"),{pname:data['product_name'],pcost:data['cost']})
         return jsonify({'Message': 'The product has been updated'})
 
 @app.route('/admin/product/<int:id>', methods=['DELETE'])

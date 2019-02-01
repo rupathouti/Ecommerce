@@ -1,0 +1,7 @@
+POST http://127.0.0.1:5000/placeorder HTTP/1.1
+xtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbF9pZCI6InNhbXlAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkNzdzR1BFN0tSTTdGS3NKMnN3emR0LkV5NjFZdnZUS2ZZVFM4c3B5M2gvN3hqdWFFMDI0UXkiLCJ1c2VyX2lkIjoxLCJleHAiOjE1NDkwNTYyNDV9.8h5nhF0JLWGK1prXfAuw2PrymfM4Tv9Q-NsyUYt--Go
+Content-Type: application/json
+
+{
+    "product_id":1    
+}

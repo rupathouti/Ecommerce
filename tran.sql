@@ -1,0 +1,10 @@
+START TRANSACTION
+
+SELECT @id := MAX(id)+1 FROM ORDERS;
+
+INSERT INTO ORDERS (@id,user_id) VALUES ();
+
+
+INSERT INTO ORDER_DETAILS (id,@id,product_id) VALUES ();
+
+COMMIT;
