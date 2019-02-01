@@ -1,0 +1,32 @@
+   GET http://127.0.0.1:5000/products HTTP/1.1
+
+# GET http://127.0.0.1:5000/products HTTP/1.1
+# xtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbF9pZCI6InNhbXlAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkNzdzR1BFN0tSTTdGS3NKMnN3emR0LkV5NjFZdnZUS2ZZVFM4c3B5M2gvN3hqdWFFMDI0UXkiLCJ1c2VyX2lkIjoxLCJleHAiOjE1NDkwNDIzMTh9.MdkzRTJs7EfnGBdPDmQv7UBdIxy_qDgK-lpqo58Bf_A
+
+# POST http://127.0.0.1:5000/admin/product HTTP/1.1
+# xtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbF9pZCI6InNhbXlAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkNzdzR1BFN0tSTTdGS3NKMnN3emR0LkV5NjFZdnZUS2ZZVFM4c3B5M2gvN3hqdWFFMDI0UXkiLCJ1c2VyX2lkIjoxLCJleHAiOjE1NDkwNDI2OTN9.6M7bhzGD3Abtz8Tv_F36-aqbLManyF9aJkkArjgnj0Y
+# Content-Type: application/json
+
+# {
+#     "product_name":"HP Laptop",
+#     "cost":50000
+# }
+
+
+
+
+# PUT http://127.0.0.1:5000/admin/product/12 HTTP/1.1
+# xtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbF9pZCI6InNhbXlAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkNzdzR1BFN0tSTTdGS3NKMnN3emR0LkV5NjFZdnZUS2ZZVFM4c3B5M2gvN3hqdWFFMDI0UXkiLCJ1c2VyX2lkIjoxLCJleHAiOjE1NDkwNDMxNjF9.R9BMNZioSqLXQ2tZVCwIBhOefskXRNNXKZdUc5cFaXA
+# Content-Type: application/json
+
+# {
+#     "product_name":"DELL Laptop",
+#     "cost":50000
+# }
+
+DELETE http://127.0.0.1:5000/admin/product/12 HTTP/1.1
+xtoken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbF9pZCI6InNhbXlAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTIkNzdzR1BFN0tSTTdGS3NKMnN3emR0LkV5NjFZdnZUS2ZZVFM4c3B5M2gvN3hqdWFFMDI0UXkiLCJ1c2VyX2lkIjoxLCJleHAiOjE1NDkwNDM2OTJ9.IBGmVVuXv-b9RRfwOfR5F0HnTxXqL9hWiq89ngtahUE
+
+
+
+

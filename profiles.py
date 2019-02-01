@@ -54,8 +54,6 @@ def update_profiles(user):
         profiles.lname = data['lname']
         profiles.age = data['age']
         profiles.mobile = data['mobile']
-        profiles.created_date = datetime.utcnow()
-        profiles.modified_date = datetime.utcnow()
         profiles.user_id = user.id
         db.session.add(profiles)
         db.session.commit()
@@ -63,4 +61,4 @@ def update_profiles(user):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

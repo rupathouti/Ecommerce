@@ -3,7 +3,7 @@ from profiles import *
 
 class Products(db.Model):
     __tablename__ ='products'
-    product_id = db.Column('product_id',db.Integer, primary_key=True)
+    id = db.Column('id',db.Integer, primary_key=True)
     product_name = db.Column('product_name',db.Text)
     created_date = db.Column('created_date',db.DATETIME)
     cost = db.Column('cost',db.Integer)
@@ -18,11 +18,11 @@ def all_products():
     for product in products:
 
         products_data = {}
-        products_data['product_id'] = product.product_id
+        products_data['id'] = product.id
         products_data['product_name'] = product.product_name
         products_data['cost'] = product.cost
         output.append(products_data)
-    return jsonify({'products': output})
+    return jsonify(output)
 
 @app.route('/admin/products', methods=['GET'])
 @token_required
@@ -34,7 +34,7 @@ def products(user):
     for product in products:
 
         products_data = {}
-        products_data['product_id'] = product.product_id
+        products_data['id'] = product.id
         products_data['product_name'] = product.product_name
         products_data['cost'] = product.cost
         output.append(products_data)
@@ -49,7 +49,7 @@ def add_products(user):
     product = Products.query.filter_by(product_name=data['product_name'])
 
     if product.count() == 0:
-        new_product = Products(product_name=data['product_name'],created_date=datetime.utcnow(),cost=data['cost'])
+        new_product = Products(product_name=data['product_name'],cost=data['cost'])
 
         db.session.add(new_product)
         db.session.commit()
@@ -64,11 +64,14 @@ def add_products(user):
 @token_required
 def update_product(user,id):
 
-    product = Products.query.filter_by(product_id=user.id).first()
+    product = Products.query.filter_by(id=id).first()
+    #select * from products where id = id
 
     if not product:
         return jsonify({'Message': 'No product to update'})
     else:
+        #update products set product_name =data['product_name'], cost = data['cost']
+        #where id = **product.id**(product = Products.query.filter_by(id=id).first())
         data = request.get_json()
         product.product_name = data['product_name']
         product.cost = data['cost']
@@ -76,10 +79,10 @@ def update_product(user,id):
         db.session.commit()
         return jsonify({'Message': 'The product has been updated'})
 
-@app.route('/product/<int:id>', methods=['DELETE'])
+@app.route('/admin/product/<int:id>', methods=['DELETE'])
 @token_required
 def delete_product(user,id):
-    product = Products.query.filter_by(id=id,user_id=user.id).first()
+    product = Products.query.filter_by(id=id).first()
 
     if not product:
         return jsonify({'Message': 'No product to delete'})
@@ -90,4 +93,4 @@ def delete_product(user,id):
         return jsonify({'Message': 'Product has been deleted successfully'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

@@ -29,8 +29,8 @@ def token_required(f):
     def decorated(*args, **kwargs):
         token = None
 
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
+        if 'xtoken' in request.headers:
+            token = request.headers['xtoken']
 
         if not token:
             return jsonify({'Message': 'Token is missing'})
@@ -91,4 +91,4 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
