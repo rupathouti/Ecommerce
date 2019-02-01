@@ -35,37 +35,18 @@ def orders(user):
         output.append(orders_data)
     return jsonify({'order_details': output})
 
-@app.route('/get_orders', methods=['GET'])
+
+@app.route('/placeorder', methods=['POST'])
 @token_required
-def get_orders(user):
-    orders = Order_Details.query.filter_by(user_id=user.id)
-    
-    if orders.count() == 0:
-        return jsonify({'message': 'No orders found'})
-    output = []
-    for order in orders:
-
-        orders_data = {}
-        orders_data['order_details_id'] = order.order_details_id
-        orders_data['order_id'] = order.order_id
-        orders_data['created_date'] = datetime.utcnow()
-        orders_data['product_id'] = order.product_id
-        
-        output.append(orders_data)
-    return jsonify({'order_details': output})
-
-
-@app.route('/add_orders', methods=['POST'])
-@token_required
-def add_orders(user):
+def placeorder(user):
     data = request.get_json()
 
-    new_order = Order_Details(order_details_id=data['order_details_id'],order_id=orders.id,created_date=datetime.utcnow(),product_id=data['product_id'], user_id=user.id)
+    new_order = Order_Details(order_details_id=data['order_details_id'],order_id=orders.id,created_date=datetime.utcnow(),product_id=data['product_id'])
 
     db.session.add(new_order)
     db.session.commit()
 
-    return jsonify({'message': 'The New Order has been created'})
+    return jsonify({'message': 'Your order has been placed'})
 
 
 if __name__ == '__main__':

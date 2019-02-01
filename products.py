@@ -10,9 +10,7 @@ class Products(db.Model):
     
 
 @app.route('/products', methods=['GET'])
-@token_required
-def products(user):
-
+def all_products():
     products = Products.query.all()
 
     output = []
@@ -20,58 +18,63 @@ def products(user):
     for product in products:
 
         products_data = {}
-        products_data['product_id'] = products.product_id
-        products_data['product_name'] = products.product_name
-        products_data['created_date'] = datetime.utcnow()
-        products_data['cost'] = products.cost
+        products_data['product_id'] = product.product_id
+        products_data['product_name'] = product.product_name
+        products_data['cost'] = product.cost
         output.append(products_data)
     return jsonify({'products': output})
 
-@app.route('/get_products', methods=['GET'])
+@app.route('/admin/products', methods=['GET'])
 @token_required
-def get_products(user):
-    products = Products.query.filter_by(user_id=user.id)
-    
-    if products.count() == 0:
-        return jsonify({'message': 'No products found'})
+def products(user):
+    products = Products.query.all()
+
     output = []
-    for product in products:
         
+    for product in products:
+
         products_data = {}
-        products_data['product_id'] = products.product_id
-        products_data['product_name'] = products.product_name
-        products_data['created_date'] = datetime.utcnow()
-        products_data['cost'] = products.cost
+        products_data['product_id'] = product.product_id
+        products_data['product_name'] = product.product_name
+        products_data['cost'] = product.cost
         output.append(products_data)
     return jsonify({'products': output})
         
 
-@app.route('/add_products', methods=['POST'])
+@app.route('/admin/product', methods=['POST'])
 @token_required
 def add_products(user):
     data = request.get_json()
 
-    new_product = Products(product_name=data['product_name'],created_date=datetime.utcnow(),cost=data['cost'], user_id=user.id)
+    product = Products.query.filter_by(product_name=data['product_name'])
 
-    db.session.add(new_product)
-    db.session.commit()
+    if product.count() == 0:
+        new_product = Products(product_name=data['product_name'],created_date=datetime.utcnow(),cost=data['cost'])
 
-    return jsonify({'message': 'The New Product has been created'})
+        db.session.add(new_product)
+        db.session.commit()
 
-@app.route('/update_product/<int:id>', methods=['PUT'])
+        return jsonify({'message': 'The New Product has been added'})
+
+    else:
+        return jsonify({'message': 'The Product is already present'})
+
+
+@app.route('/admin/product/<int:id>', methods=['PUT'])
 @token_required
 def update_product(user,id):
 
-    product = Products.query.filter_by(id=id,user_id=user.id).first()
+    product = Products.query.filter_by(product_id=user.id).first()
 
     if not product:
         return jsonify({'Message': 'No product to update'})
- 
-    data = request.get_json()
-    product.product_name = data['product_name']
-    product.cost = data['cost']
-    db.session.commit()
-    return jsonify({'Message': 'The product has been updated'})
+    else:
+        data = request.get_json()
+        product.product_name = data['product_name']
+        product.cost = data['cost']
+        db.session.add(product)
+        db.session.commit()
+        return jsonify({'Message': 'The product has been updated'})
 
 @app.route('/product/<int:id>', methods=['DELETE'])
 @token_required
@@ -80,11 +83,11 @@ def delete_product(user,id):
 
     if not product:
         return jsonify({'Message': 'No product to delete'})
+    else:
+        db.session.delete(product)
+        db.session.commit()
 
-    db.session.delete(product)
-    db.session.commit()
-
-    return jsonify({'Message': 'Product has been deleted successfully'})
+        return jsonify({'Message': 'Product has been deleted successfully'})
 
 if __name__ == '__main__':
     app.run(debug=True)
